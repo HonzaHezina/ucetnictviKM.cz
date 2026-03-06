@@ -240,7 +240,7 @@
     const form = document.getElementById("contactForm");
     const status = document.getElementById("formStatus");
 
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const data = new FormData(form);
@@ -250,20 +250,44 @@
       const service = data.get("service").toString().trim();
       const message = data.get("message").toString().trim();
 
-      const subject = encodeURIComponent(`Poptávka účetních služeb - ${name}`);
-      const body = encodeURIComponent(
-        `Jméno: ${name}\n` +
-        `E-mail: ${email}\n` +
-        `Telefon: ${phone || "neuveden"}\n` +
-        `Služba: ${service}\n\n` +
-        `Zpráva:\n${message}`
-      );
+      const submitButton = form.querySelector('button[type="submit"]');
+      submitButton.disabled = true;
+      submitButton.classList.add("opacity-70", "cursor-not-allowed");
 
-      window.location.href = `mailto:info@ucetnictvikm.cz?subject=${subject}&body=${body}`;
+      status.className = "rounded-xl bg-slate-100 p-3 text-sm font-semibold text-slate-700";
+      status.textContent = "Odesílám poptávku...";
 
-      status.textContent = "Děkujeme. Otevřel se váš e-mailový klient s předvyplněnou zprávou.";
-      status.classList.remove("hidden");
-      form.reset();
+      try {
+        const response = await fetch("https://formsubmit.co/ajax/info@ucetnictvikm.cz", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            _subject: `Poptávka účetních služeb - ${name}`,
+            name,
+            email,
+            phone: phone || "neuveden",
+            service,
+            message,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Odeslání se nezdařilo");
+        }
+
+        status.className = "rounded-xl bg-emerald-50 p-3 text-sm font-semibold text-emerald-700";
+        status.textContent = "Děkujeme, poptávka byla odeslána. Ozveme se vám co nejdříve.";
+        form.reset();
+      } catch (error) {
+        status.className = "rounded-xl bg-rose-50 p-3 text-sm font-semibold text-rose-700";
+        status.textContent = "Poptávku se nepodařilo odeslat. Napište prosím na info@ucetnictvikm.cz.";
+      } finally {
+        submitButton.disabled = false;
+        submitButton.classList.remove("opacity-70", "cursor-not-allowed");
+      }
     });
   </script>
 </body>
