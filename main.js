@@ -9,10 +9,24 @@ const sectionTargets = [...document.querySelectorAll("main section[id]")];
 const serviceCards = [...document.querySelectorAll("[data-service-card]")];
 const serviceTriggers = [...document.querySelectorAll("[data-service-trigger]")];
 const serviceSelect = document.getElementById("serviceSelect");
+const selectedServiceNote = document.getElementById("selectedServiceNote");
 const faqItems = [...document.querySelectorAll("[data-faq-item]")];
 const statNumbers = [...document.querySelectorAll("[data-count]")];
 const messageField = document.querySelector('textarea[name="message"]');
 const messageCounter = document.getElementById("messageCounter");
+
+const updateSelectedServiceNote = (serviceName) => {
+  if (!selectedServiceNote) {
+    return;
+  }
+
+  if (!serviceName) {
+    selectedServiceNote.textContent = "Vyberte oblast, kterou řešíte. Formulář pak bude přesnější a odpověď rychlejší.";
+    return;
+  }
+
+  selectedServiceNote.textContent = `Vybraná oblast: ${serviceName}. Stačí doplnit stručný popis a kontakt.`;
+};
 
 const closeMenu = () => {
   if (!nav || !menuToggle) {
@@ -147,6 +161,8 @@ const selectService = (serviceName, triggerCard) => {
     serviceSelect.value = serviceName;
   }
 
+  updateSelectedServiceNote(serviceName);
+
   document.getElementById("kontakt")?.scrollIntoView({ behavior: "smooth", block: "start" });
 };
 
@@ -170,6 +186,12 @@ serviceCards.forEach((card) => {
     selectService(card.dataset.service, card);
   });
 });
+
+serviceSelect?.addEventListener("change", () => {
+  updateSelectedServiceNote(serviceSelect.value);
+});
+
+updateSelectedServiceNote(serviceSelect?.value || "");
 
 faqItems.forEach((item) => {
   const button = item.querySelector("[data-faq-button]");
@@ -250,6 +272,7 @@ if (form && status) {
       status.className = "form-status is-success";
       status.textContent = "Děkujeme, poptávka byla odeslána. Ozveme se vám co nejdříve.";
       form.reset();
+      updateSelectedServiceNote("");
       if (messageCounter) {
         messageCounter.textContent = "0 / 600";
       }
