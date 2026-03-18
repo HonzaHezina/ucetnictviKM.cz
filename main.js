@@ -250,6 +250,9 @@ if (form && status) {
       status.className = "form-status is-success";
       status.textContent = "Děkujeme, poptávka byla odeslána. Ozveme se vám co nejdříve.";
       form.reset();
+      if (messageCounter) {
+        messageCounter.textContent = "0 / 600";
+      }
       serviceCards.forEach((card) => card.classList.remove("is-selected"));
     } catch (error) {
       status.className = "form-status is-error";
@@ -257,5 +260,30 @@ if (form && status) {
     } finally {
       submitButton.disabled = false;
     }
+  });
+}
+
+const tiltItems = [...document.querySelectorAll("[data-tilt]")];
+const tiltAllowed = window.matchMedia("(hover: hover) and (pointer: fine)").matches
+  && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+if (tiltAllowed) {
+  tiltItems.forEach((item) => {
+    const resetTilt = () => {
+      item.style.transform = "perspective(1100px) rotateX(0deg) rotateY(0deg) translateY(0)";
+    };
+
+    item.addEventListener("pointermove", (event) => {
+      const rect = item.getBoundingClientRect();
+      const offsetX = (event.clientX - rect.left) / rect.width;
+      const offsetY = (event.clientY - rect.top) / rect.height;
+      const rotateY = (offsetX - 0.5) * 8;
+      const rotateX = (0.5 - offsetY) * 8;
+
+      item.style.transform = `perspective(1100px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+    });
+
+    item.addEventListener("pointerleave", resetTilt);
+    item.addEventListener("pointercancel", resetTilt);
   });
 }
