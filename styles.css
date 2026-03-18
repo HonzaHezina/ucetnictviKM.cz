@@ -1036,6 +1036,11 @@ main section[id] {
   grid-template-columns: 0.9fr 1.1fr;
 }
 
+.contact-layout-single {
+  grid-template-columns: 1fr;
+  max-width: 48rem;
+}
+
 .contact-form {
   margin-top: 1.5rem;
   display: grid;
