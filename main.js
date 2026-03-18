@@ -277,7 +277,7 @@ if (form && status) {
     status.textContent = "Odesílám poptávku...";
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/mechurovaklara@gmail.com", {
+      const response = await fetch("https://formsubmit.co/ajax/ucetnictvimechurova@gmail.com", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -307,7 +307,7 @@ if (form && status) {
       serviceCards.forEach((card) => card.classList.remove("is-selected"));
     } catch (error) {
       status.className = "form-status is-error";
-      status.textContent = "Poptávku se nepodařilo odeslat. Napište prosím na mechurovaklara@gmail.com nebo info@ucetnictvikm.cz.";
+      status.textContent = "Poptávku se nepodařilo odeslat. Napište prosím na ucetnictvimechurova@gmail.com nebo info@ucetnictvikm.cz.";
     } finally {
       submitButton.disabled = false;
     }
