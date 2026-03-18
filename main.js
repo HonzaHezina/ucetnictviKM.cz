@@ -28,6 +28,20 @@ const updateSelectedServiceNote = (serviceName) => {
   selectedServiceNote.textContent = `Vybraná oblast: ${serviceName}. Stačí doplnit stručný popis a kontakt.`;
 };
 
+const scrollToSection = (element) => {
+  if (!element) {
+    return;
+  }
+
+  const headerOffset = (header?.offsetHeight || 0) + 16;
+  const top = element.getBoundingClientRect().top + window.scrollY - headerOffset;
+
+  window.scrollTo({
+    top: Math.max(top, 0),
+    behavior: "smooth",
+  });
+};
+
 const closeMenu = () => {
   if (!nav || !menuToggle) {
     return;
@@ -69,8 +83,22 @@ if (menuToggle && nav) {
   });
 
   navLinks.forEach((link) => {
-    link.addEventListener("click", () => {
+    link.addEventListener("click", (event) => {
+      const href = link.getAttribute("href") || "";
+
       closeMenu();
+
+      if (!href.startsWith("#")) {
+        return;
+      }
+
+      const target = document.querySelector(href);
+      if (!target) {
+        return;
+      }
+
+      event.preventDefault();
+      scrollToSection(target);
     });
   });
 }
@@ -163,7 +191,7 @@ const selectService = (serviceName, triggerCard) => {
 
   updateSelectedServiceNote(serviceName);
 
-  document.getElementById("kontakt")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  scrollToSection(document.getElementById("kontakt"));
 };
 
 serviceTriggers.forEach((trigger) => {

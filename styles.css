@@ -23,6 +23,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
 }
 
 body {
@@ -75,6 +76,10 @@ button {
 
 .section {
   padding: 5.5rem 0;
+}
+
+main section[id] {
+  scroll-margin-top: 6rem;
 }
 
 .section-alt {
@@ -1276,9 +1281,12 @@ button {
     grid-template-columns: none;
     overflow-x: auto;
     overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-padding-inline: 0.15rem;
+    scroll-snap-type: x proximity;
     padding-bottom: 0.35rem;
     margin-right: -0.2rem;
+    touch-action: pan-x;
   }
   .touch-grid > * {
     scroll-snap-align: start;
@@ -1458,6 +1466,14 @@ button {
 }
 
 @media (max-width: 430px) {
+  html {
+    scroll-padding-top: 5.2rem;
+  }
+
+  main section[id] {
+    scroll-margin-top: 5.2rem;
+  }
+
   .section {
     padding: 4.4rem 0;
   }
@@ -1524,9 +1540,29 @@ button {
     gap: 0.6rem;
     padding-inline: 0.7rem;
   }
+
+  .touch-grid {
+    grid-auto-flow: row;
+    grid-auto-columns: unset;
+    grid-template-columns: 1fr;
+    overflow-x: visible;
+    overscroll-behavior-x: auto;
+    scroll-snap-type: none;
+    margin-right: 0;
+    padding-bottom: 0;
+    touch-action: auto;
+  }
 }
 
 @media (max-width: 360px) {
+  html {
+    scroll-padding-top: 5rem;
+  }
+
+  main section[id] {
+    scroll-margin-top: 5rem;
+  }
+
   .section {
     padding: 4rem 0;
   }
