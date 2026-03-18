@@ -31,6 +31,7 @@ body {
   color: var(--ink);
   background: var(--surface);
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
 a {
@@ -373,6 +374,39 @@ button {
   background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(12px);
   box-shadow: var(--shadow-soft);
+  animation: panelFloat 7s ease-in-out infinite;
+}
+
+.stats-section {
+  padding-top: 0;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.stat-card {
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: var(--shadow-card);
+}
+
+.stat-value {
+  margin: 0;
+  font-size: clamp(2.1rem, 4vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  color: var(--primary);
+}
+
+.stat-label {
+  margin: 0.4rem 0 0;
+  color: var(--muted);
+  font-weight: 700;
 }
 
 .panel-label,
@@ -709,6 +743,16 @@ button {
   transform: translateY(0);
 }
 
+@keyframes panelFloat {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
 .reveal-delay-1 { transition-delay: 70ms; }
 .reveal-delay-2 { transition-delay: 140ms; }
 .reveal-delay-3 { transition-delay: 210ms; }
@@ -716,7 +760,8 @@ button {
 @media (max-width: 1080px) {
   .feature-grid,
   .service-grid,
-  .timeline-grid {
+  .timeline-grid,
+  .stats-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -775,7 +820,8 @@ button {
   .service-grid,
   .pricing-grid,
   .timeline-grid,
-  .form-row-split { grid-template-columns: 1fr; }
+  .form-row-split,
+  .stats-grid { grid-template-columns: 1fr; }
   .hero h1,
   .section-heading h2,
   .contact-panel h2,
@@ -803,4 +849,5 @@ button {
     transition-duration: 0.01ms !important;
   }
   .reveal { opacity: 1; transform: none; }
+  .hero-panel { animation: none; }
 }

@@ -8,6 +8,7 @@ const serviceCards = [...document.querySelectorAll("[data-service-card]")];
 const serviceTriggers = [...document.querySelectorAll("[data-service-trigger]")];
 const serviceSelect = document.getElementById("serviceSelect");
 const faqItems = [...document.querySelectorAll("[data-faq-item]")];
+const statNumbers = [...document.querySelectorAll("[data-count]")];
 
 const setHeaderState = () => {
   header?.classList.toggle("is-scrolled", window.scrollY > 10);
@@ -42,6 +43,34 @@ if ("IntersectionObserver" in window) {
 
   revealItems.forEach((item) => revealObserver.observe(item));
 
+  const countObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) {
+        return;
+      }
+
+      const element = entry.target;
+      const target = Number(element.dataset.count || 0);
+      const duration = 1300;
+      const startTime = performance.now();
+
+      const tick = (now) => {
+        const progress = Math.min((now - startTime) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        element.textContent = String(Math.round(target * eased));
+
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        }
+      };
+
+      requestAnimationFrame(tick);
+      countObserver.unobserve(element);
+    });
+  }, { threshold: 0.6 });
+
+  statNumbers.forEach((item) => countObserver.observe(item));
+
   const navObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) {
@@ -60,6 +89,9 @@ if ("IntersectionObserver" in window) {
   sectionTargets.forEach((section) => navObserver.observe(section));
 } else {
   revealItems.forEach((item) => item.classList.add("is-visible"));
+  statNumbers.forEach((item) => {
+    item.textContent = item.dataset.count || item.textContent;
+  });
 }
 
 const selectService = (serviceName, triggerCard) => {

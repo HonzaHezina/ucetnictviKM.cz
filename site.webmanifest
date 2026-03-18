@@ -1,0 +1,16 @@
+{
+  "name": "KM Účetnictví",
+  "short_name": "KM Účetnictví",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fffaf6",
+  "theme_color": "#bd6d5a",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
