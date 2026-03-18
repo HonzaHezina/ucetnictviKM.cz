@@ -69,6 +69,8 @@
       <a href="#kontakt" class="button button-primary header-cta">Nezávazná poptávka</a>
     </div>
   </header>
+  <div class="scroll-progress" aria-hidden="true" data-scroll-progress></div>
+  <div class="nav-overlay" hidden data-nav-overlay></div>
 
   <main>
     <section id="hero" class="hero section">
@@ -157,7 +159,7 @@
           <h2>Kompletní servis pro podnikatele, kteří chtějí pořádek</h2>
           <p>Vyberte oblast, kterou aktuálně řešíte. Kliknutím se předvyplní formulář níže a dostanete se rovnou ke kontaktu.</p>
         </div>
-        <div class="service-grid">
+        <div class="service-grid touch-grid">
           <article class="service-card reveal" data-service-card data-service="Daňová evidence / účetnictví">
             <div class="service-number">01</div>
             <h3>Daňová evidence a účetnictví</h3>
@@ -196,7 +198,7 @@
           </div>
           <div class="pricing-note">Všechny ceny jsou uvedené bez DPH.</div>
         </div>
-        <div class="pricing-grid">
+        <div class="pricing-grid touch-grid">
           <article class="pricing-card reveal">
             <h3>Zpracování účetnictví</h3>
             <div class="pricing-list">
@@ -237,7 +239,7 @@
           <p class="eyebrow">Postup spolupráce</p>
           <h2>Jednoduchý proces bez zbytečných kroků</h2>
         </div>
-        <div class="timeline-grid">
+        <div class="timeline-grid touch-grid">
           <article class="timeline-card reveal">
             <span class="timeline-step">1.</span>
             <h3>Úvodní konzultace</h3>
@@ -355,6 +357,10 @@
               <option>Konzultace a nastavení procesů</option>
             </select>
             <textarea required name="message" rows="5" placeholder="Stručně popište vaši situaci"></textarea>
+            <div class="message-meta">
+              <span>Čím konkrétnější zadání, tím rychlejší a přesnější odpověď.</span>
+              <span id="messageCounter">0 / 600</span>
+            </div>
             <div class="form-actions">
               <p>Odesláním souhlasíte se zpracováním údajů za účelem odpovědi na poptávku.</p>
               <button type="submit" class="button button-primary">Odeslat poptávku</button>
@@ -365,6 +371,11 @@
       </div>
     </section>
   </main>
+
+  <div class="mobile-cta-bar" data-mobile-bar>
+    <a href="tel:+420603989762" class="mobile-cta mobile-cta-call">Zavolat</a>
+    <a href="#kontakt" class="mobile-cta mobile-cta-form">Poptávka</a>
+  </div>
 
   <footer class="site-footer">
     <div class="container footer-inner">

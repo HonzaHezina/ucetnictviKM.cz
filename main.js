@@ -1,6 +1,8 @@
 const header = document.querySelector("[data-header]");
 const menuToggle = document.querySelector("[data-menu-toggle]");
 const nav = document.querySelector("[data-nav]");
+const navOverlay = document.querySelector("[data-nav-overlay]");
+const scrollProgress = document.querySelector("[data-scroll-progress]");
 const navLinks = [...document.querySelectorAll(".nav-link")];
 const revealItems = document.querySelectorAll(".reveal");
 const sectionTargets = [...document.querySelectorAll("main section[id]")];
@@ -9,9 +11,33 @@ const serviceTriggers = [...document.querySelectorAll("[data-service-trigger]")]
 const serviceSelect = document.getElementById("serviceSelect");
 const faqItems = [...document.querySelectorAll("[data-faq-item]")];
 const statNumbers = [...document.querySelectorAll("[data-count]")];
+const messageField = document.querySelector('textarea[name="message"]');
+const messageCounter = document.getElementById("messageCounter");
+
+const closeMenu = () => {
+  if (!nav || !menuToggle) {
+    return;
+  }
+
+  nav.classList.remove("is-open");
+  menuToggle.setAttribute("aria-expanded", "false");
+  document.body.classList.remove("menu-open");
+
+  if (navOverlay) {
+    navOverlay.hidden = true;
+  }
+};
 
 const setHeaderState = () => {
   header?.classList.toggle("is-scrolled", window.scrollY > 10);
+
+  if (!scrollProgress) {
+    return;
+  }
+
+  const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = scrollableHeight > 0 ? window.scrollY / scrollableHeight : 0;
+  scrollProgress.style.transform = `scaleX(${Math.min(Math.max(progress, 0), 1)})`;
 };
 
 setHeaderState();
@@ -21,15 +47,33 @@ if (menuToggle && nav) {
   menuToggle.addEventListener("click", () => {
     const isOpen = nav.classList.toggle("is-open");
     menuToggle.setAttribute("aria-expanded", String(isOpen));
+    document.body.classList.toggle("menu-open", isOpen);
+
+    if (navOverlay) {
+      navOverlay.hidden = !isOpen;
+    }
   });
 
   navLinks.forEach((link) => {
     link.addEventListener("click", () => {
-      nav.classList.remove("is-open");
-      menuToggle.setAttribute("aria-expanded", "false");
+      closeMenu();
     });
   });
 }
+
+navOverlay?.addEventListener("click", closeMenu);
+
+window.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeMenu();
+  }
+});
+
+window.addEventListener("resize", () => {
+  if (window.innerWidth > 880) {
+    closeMenu();
+  }
+});
 
 if ("IntersectionObserver" in window) {
   const revealObserver = new IntersectionObserver((entries) => {
@@ -117,6 +161,16 @@ serviceTriggers.forEach((trigger) => {
   });
 });
 
+serviceCards.forEach((card) => {
+  card.addEventListener("click", (event) => {
+    if (event.target.closest("button")) {
+      return;
+    }
+
+    selectService(card.dataset.service, card);
+  });
+});
+
 faqItems.forEach((item) => {
   const button = item.querySelector("[data-faq-button]");
   if (!button) {
@@ -139,6 +193,18 @@ faqItems.forEach((item) => {
 });
 
 document.getElementById("year").textContent = new Date().getFullYear();
+
+if (messageField && messageCounter) {
+  const maxLength = 600;
+  messageField.maxLength = maxLength;
+
+  const updateCounter = () => {
+    messageCounter.textContent = `${messageField.value.length} / ${maxLength}`;
+  };
+
+  updateCounter();
+  messageField.addEventListener("input", updateCounter);
+}
 
 const form = document.getElementById("contactForm");
 const status = document.getElementById("formStatus");
