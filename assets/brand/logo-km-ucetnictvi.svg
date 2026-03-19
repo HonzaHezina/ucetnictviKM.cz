@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-labelledby="title desc">
+  <title id="title">KM Ucetnictvi logo</title>
+  <desc id="desc">Horizontalni logo KM Ucetnictvi s ikonou grafu a sipky.</desc>
+  <defs>
+    <clipPath id="mark-clip">
+      <circle cx="110" cy="130" r="92" />
+    </clipPath>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <circle cx="110" cy="130" r="92" fill="#D6725D" />
+    <g clip-path="url(#mark-clip)">
+      <rect x="46" y="138" width="24" height="72" rx="4" fill="#FFF8F3" />
+      <rect x="82" y="120" width="24" height="90" rx="4" fill="#FFF8F3" />
+      <rect x="118" y="92" width="24" height="118" rx="4" fill="#FFF8F3" />
+      <path d="M14 168c18-19 34-29 49-29 10 0 19 3 26 9 4 4 8 5 12 5 6 0 11-4 16-12 10-16 22-34 38-34 8 0 15 4 21 11l43-44 18 17-42 44c-12 12-21 17-33 17-11 0-20-4-29-11-5-5-10-7-16-7-9 0-20 9-32 24-8 10-18 15-29 15-9 0-18-3-27-9-4-3-8-4-12-4-8 0-18 5-31 17L14 168Z" fill="#FFF8F3" />
+      <path d="M151 85l46-48 17 17-46 47z" fill="#FFF8F3" />
+      <path d="M206 39l30 3-4 30z" fill="#FFF8F3" />
+    </g>
+    <g fill="#D6725D">
+      <text x="248" y="126" font-family="'Trebuchet MS', 'Segoe UI', Arial, sans-serif" font-size="96" font-weight="800" letter-spacing="2">KM</text>
+      <text x="248" y="194" font-family="'Trebuchet MS', 'Segoe UI', Arial, sans-serif" font-size="62" font-weight="500">U&#269;etnictv&#237;</text>
+    </g>
+  </g>
+</svg>
